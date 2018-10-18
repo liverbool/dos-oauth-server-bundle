@@ -1,0 +1,15 @@
+dos_admin_oauth_search_user:
+    path: /oauth-searh-users
+    defaults:
+        _format: json
+        _controller: dos.controller.oauth_user:indexAction
+        _sylius:
+            grid: admin_oauth_search_user
+
+dos_admin_oauth_search_client:
+    path: /oauth-searh-clients
+    defaults:
+        _format: json
+        _controller: dos.controller.oauth_client:indexAction
+        _sylius:
+            grid: admin_oauth_search_client

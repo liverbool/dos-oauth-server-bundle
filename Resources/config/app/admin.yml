@@ -1,0 +1,2 @@
+imports:
+    - { resource: "@DosOAuthServerBundle/Resources/config/grids/admin/main.yml" }

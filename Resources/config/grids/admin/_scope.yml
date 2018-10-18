@@ -1,0 +1,58 @@
+sylius_grid:
+    grids:
+        admin_oauth_scope:
+            driver:
+                name: doctrine/orm
+                options:
+                    class: "%dos.model.oauth_scope.class%"
+                    repository:
+                        method: createListQueryBuilder
+            limits: [20]
+            sorting:
+                identifier: asc
+            fields:
+                identifier:
+                    type: text
+                    label: ID
+                    sortable: ~
+                    options:
+                        width: 80px
+                enabled:
+                    type: tpl
+                    label: Enabled?
+                    sortable: ~
+                    options:
+                        width: 50px
+                        template: "@ChangMin/Grid/Field/enabled.html.twig"
+                name:
+                    type: tpl
+                    label: Name
+                    sortable: translation.name
+                    path: .
+                    options:
+                        width: auto
+                        template: "@DosOAuthServer/Scope/Grid/Field/name.html.twig"
+                updatedAt:
+                    type: localizeddate
+                    label: Updated At
+                    sortable: ~
+                    options:
+                        width: auto
+            filters:
+                search:
+                    type: string
+                    label: Search
+                    options:
+                        default: true
+                        fields:
+                            - translation.name
+                            - translation.description
+            actions:
+                main:
+                    create:
+                        type: create
+                item:
+                    update:
+                        type: update
+                    delete:
+                        type: delete

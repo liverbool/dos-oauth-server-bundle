@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xmlns:gedmo="http://gediminasm.org/schemas/orm/doctrine-extensions-mapping"
+                  xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+    <mapped-superclass name="Dos\OAuthServerBundle\Model\AuthorizedUser" table="dos_oauth_authorized_user">
+        <unique-constraints>
+            <unique-constraint columns="user_id,client_id,grant_type"/>
+        </unique-constraints>
+
+        <id name="id" column="id" type="integer">
+            <generator strategy="AUTO"/>
+        </id>
+
+        <field name="grantType" column="grant_type" type="string" nullable="true"/>
+        <field name="scopes" type="array" nullable="true"/>
+        <field name="enabled" type="boolean" nullable="true"/>
+
+        <field name="createdAt" type="datetime">
+            <gedmo:timestampable on="create"/>
+        </field>
+
+        <field name="updatedAt" type="datetime" nullable="true">
+            <gedmo:timestampable on="update"/>
+        </field>
+
+        <many-to-one field="user" target-entity="Dos\OAuthServerBundle\Model\UserInterface">
+            <join-column name="user_id" referenced-column-name="id" nullable="true"/>
+        </many-to-one>
+
+        <many-to-one field="client" target-entity="Dos\OAuthServerBundle\Model\ClientInterface" inversed-by="authorizedUsers">
+            <join-column name="client_id" referenced-column-name="id" nullable="true"/>
+        </many-to-one>
+    </mapped-superclass>
+</doctrine-mapping>

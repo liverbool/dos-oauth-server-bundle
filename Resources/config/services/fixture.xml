@@ -1,0 +1,56 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+        <service class="Dos\OAuthServerBundle\Fixture\AccessTokenFixture">
+            <argument type="service" id="dos.manager.oauth_access_token"/>
+            <argument type="service">
+                <service class="Dos\OAuthServerBundle\Fixture\AccessTokenFactory">
+                    <argument type="service" id="dos.factory.oauth_access_token"/>
+                    <argument type="service" id="dos.repository.oauth_client"/>
+                    <argument type="service" id="dos.repository.oauth_scope"/>
+                    <argument type="service" id="sylius.repository.web_user"/>
+                </service>
+            </argument>
+            <tag name="sylius_fixtures.fixture"/>
+        </service>
+        <service class="Dos\OAuthServerBundle\Fixture\ClientFixture">
+            <argument type="service" id="dos.manager.oauth_client"/>
+            <argument type="service">
+                <service class="Dos\OAuthServerBundle\Fixture\ClientFactory">
+                    <argument type="service" id="dos.factory.oauth_client"/>
+                    <argument type="service" id="sylius.repository.web_user"/>
+                    <call method="setTranslationProvider">
+                        <argument type="service" id="sylius.translation_locale_provider"/>
+                    </call>
+                </service>
+            </argument>
+            <tag name="sylius_fixtures.fixture"/>
+        </service>
+        <service class="Dos\OAuthServerBundle\Fixture\RefreshTokenFixture">
+            <argument type="service" id="dos.manager.oauth_refresh_token"/>
+            <argument type="service">
+                <service class="Dos\OAuthServerBundle\Fixture\RefreshTokenFactory">
+                    <argument type="service" id="dos.factory.oauth_refresh_token"/>
+                    <argument type="service" id="dos.repository.oauth_access_token"/>
+                </service>
+            </argument>
+            <tag name="sylius_fixtures.fixture"/>
+        </service>
+        <service class="Dos\OAuthServerBundle\Fixture\ScopeFixture">
+            <argument type="service" id="dos.manager.oauth_scope"/>
+            <argument type="service">
+                <service class="Dos\OAuthServerBundle\Fixture\ScopeFactory">
+                    <argument type="service" id="dos.factory.oauth_scope"/>
+                    <call method="setTranslationProvider">
+                        <argument type="service" id="sylius.translation_locale_provider"/>
+                    </call>
+                </service>
+            </argument>
+            <tag name="sylius_fixtures.fixture"/>
+        </service>
+    </services>
+</container>

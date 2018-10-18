@@ -1,0 +1,18 @@
+dos:
+    oauth_client:
+        name:
+            not_blank: Client's name should be blank.
+        description:
+            not_blank: Client's description should be blank.
+        redirect_uris:
+            not_blank: Client's redirect uris should be blank.
+        grant_types:
+            not_blank: Client's grant types should be blank.
+        supports_scopes:
+            not_blank: Client's supports scopes should be blank.
+
+    oauth_scope:
+        name:
+            not_blank: Scope's name should be blank.
+        description:
+            not_blank: Scope's description should be blank.

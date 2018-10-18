@@ -1,0 +1,33 @@
+dos_admin_oauth_access_token:
+    type: sylius.resource
+    resource: |
+        alias: dos.oauth_access_token
+        section: admin
+        templates: ChangMin:Crud
+        grid: admin_oauth_access_token
+        permission: true
+        except: ["show"]
+        vars:
+            all:
+                templates:
+                    form: DosOAuthServerBundle:AccessToken:_form.html.twig
+            index:
+                icon: fa fa-file
+                header: "Access Tokens"
+            create:
+                icon: fa fa-user-plus
+                header: "Create Access Token"
+                breadcrumb:
+                    index:
+                        icon: fa fa-file
+                        label: "Access Tokens"
+
+dos_admin_oauth_access_token_toggle:
+    path: /oauth-access-tokens/{id}/toggle
+    methods: [PUT]
+    defaults:
+        _format: json
+        _controller: dos.controller.oauth_access_token:updateAction
+        _sylius:
+            section: admin
+            form: Dos\OAuthServerBundle\Form\Type\ToggleAccessTokenType

@@ -1,0 +1,65 @@
+sylius_grid:
+    grids:
+        admin_oauth_refresh_token:
+            driver:
+                name: doctrine/orm
+                options:
+                    class: "%dos.model.oauth_refresh_token.class%"
+                    repository:
+                        method: createListQueryBuilder
+            limits: [20]
+            sorting:
+                createdAt: desc
+            fields:
+                enabled:
+                    type: toggle
+                    label: Enabled?
+                    sortable: ~
+                    options:
+                        width: 50px
+                        route: dos_admin_oauth_refresh_token_toggle
+                        parameters:
+                            id: id
+                identifier:
+                    type: text
+                    label: Identifier
+                    sortable: ~
+                accessToken:
+                    type: text
+                    label: Access Token
+                    sortable: accessToken.identifier
+                    path: accessToken.identifier
+                user:
+                    type: text
+                    label: User
+                    sortable: user.username
+                    path: accessToken.user
+                client:
+                    type: text
+                    label: Client
+                    sortable: clientTranslation.name
+                    path: accessToken.client.name
+                createdAt:
+                    type: localizeddate
+                    label: Created At
+                    sortable: ~
+                    options:
+                        width: auto
+            filters:
+                search:
+                    type: string
+                    label: Search
+                    options:
+                        default: true
+                        fields:
+                            - identifier
+                            - accessToken.identifier
+                            - clientTranslation.name
+                            - user.username
+                            - user.email
+            actions:
+                item:
+                    update:
+                        type: update
+                    delete:
+                        type: delete

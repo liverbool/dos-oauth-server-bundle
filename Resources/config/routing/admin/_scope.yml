@@ -1,0 +1,23 @@
+dos_admin_oauth_scope:
+    type: sylius.resource
+    resource: |
+        alias: dos.oauth_scope
+        section: admin
+        templates: ChangMin:Crud
+        grid: admin_oauth_scope
+        permission: true
+        except: ["show"]
+        vars:
+            all:
+                templates:
+                    form: DosOAuthServerBundle:Scope:_form.html.twig
+            index:
+                icon: fa fa-file
+                header: "Scopes"
+            create:
+                icon: fa fa-user-plus
+                header: "Create Scopes"
+                breadcrumb:
+                    index:
+                        icon: fa fa-file
+                        label: "Scopes"

@@ -1,0 +1,13 @@
+{# @var data \Dos\OAuthServerBundle\Model\ClientInterface #}
+<div class="media">
+    <a href="{{ path('dos_admin_oauth_client_index', { id: data.id }) }}">
+        <img class="align-self-center mr-3" src="{{ data.logo|phpmob_imagine('62x62') }}" alt="{{ data.name }}">
+    </a>
+    <div class="media-body">
+        <h4><a href="{{ path('dos_admin_oauth_client_update', { id: data.id }) }}">{{ data.name }}</a></h4>
+        <p class="text-muted mb-1">{{ data.description }}</p>
+        <strong>{{ "Public Key" }}</strong>: {{ data.identifier }}<br>
+        <strong>{{ "Secret Key" }}</strong>: {{ data.secret }}<br>
+        <strong>{{ "Owner" }}</strong>: {{ data.user }}<br>
+    </div>
+</div>

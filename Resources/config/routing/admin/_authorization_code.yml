@@ -1,0 +1,33 @@
+dos_admin_oauth_authorization_code:
+    type: sylius.resource
+    resource: |
+        alias: dos.oauth_authorization_code
+        section: admin
+        templates: ChangMin:Crud
+        grid: admin_oauth_authorization_code
+        permission: true
+        except: ["show"]
+        vars:
+            all:
+                templates:
+                    form: DosOAuthServerBundle:AuthorizationCode:_form.html.twig
+            index:
+                icon: fa fa-file
+                header: "Authorization Codes"
+            create:
+                icon: fa fa-user-plus
+                header: "Create Authorization Code"
+                breadcrumb:
+                    index:
+                        icon: fa fa-file
+                        label: "Authorization Codes"
+
+dos_admin_oauth_authorization_code_toggle:
+    path: /oauth-authorization-codes/{id}/toggle
+    methods: [PUT]
+    defaults:
+        _format: json
+        _controller: dos.controller.oauth_authorization_code:updateAction
+        _sylius:
+            section: admin
+            form: Dos\OAuthServerBundle\Form\Type\ToggleAuthorizationCodeType

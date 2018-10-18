@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
+                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                    xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/services/constraint-mapping-1.0.xsd">
+    <class name="Dos\OAuthServerBundle\Model\Client">
+        <property name="logo">
+            <constraint name="Valid"/>
+        </property>
+        <property name="translations">
+            <constraint name="Valid"/>
+        </property>
+        <property name="redirectUris">
+            <constraint name="NotBlank">
+                <option name="message">dos.oauth_client.redirect_uris.not_blank</option>
+                <option name="groups">
+                    <value>dos</value>
+                </option>
+            </constraint>
+        </property>
+        <property name="grantTypes">
+            <constraint name="NotBlank">
+                <option name="message">dos.oauth_client.grant_types.not_blank</option>
+                <option name="groups">
+                    <value>dos</value>
+                </option>
+            </constraint>
+        </property>
+        <property name="supportsScopes">
+            <constraint name="NotBlank">
+                <option name="message">dos.oauth_client.supports_scopes.not_blank</option>
+                <option name="groups">
+                    <value>dos</value>
+                </option>
+            </constraint>
+            <constraint name="Count">
+                <option name="min">1</option>
+                <option name="minMessage">dos.oauth_client.supports_scopes.not_blank</option>
+                <option name="groups">
+                    <value>dos</value>
+                </option>
+            </constraint>
+        </property>
+    </class>
+</constraint-mapping>

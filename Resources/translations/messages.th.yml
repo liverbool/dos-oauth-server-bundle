@@ -1,0 +1,25 @@
+dos:
+    ui.authorization_code_grant: Authorization code
+    ui.client_credentials_grant: Client credentials
+    ui.implicit_grant: Implicit
+    ui.password_grant: Password
+    ui.refresh_token_grant: Refresh token
+    form:
+        oauth_client:
+            translations: Detail
+            name: Name
+            description: Description
+            redirect_uris: Redirect uris
+            grant_types: Grant types
+            supports_scopes: Supports scopes
+            logo: Logo
+            user: Owner User
+            user_select: Search user ...
+            enabled: Enabled?
+            authorized_require: Authorized require?
+        oauth_scope:
+            translations: Detail
+            identifier: Identifier
+            name: Name
+            description: Description
+            enabled: Enabled?

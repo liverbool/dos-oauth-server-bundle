@@ -1,0 +1,33 @@
+dos_admin_oauth_refresh_token:
+    type: sylius.resource
+    resource: |
+        alias: dos.oauth_refresh_token
+        section: admin
+        templates: ChangMin:Crud
+        grid: admin_oauth_refresh_token
+        permission: true
+        except: ['create', 'show']
+        vars:
+            all:
+                templates:
+                    form: DosOAuthServerBundle:RefreshToken:_form.html.twig
+            index:
+                icon: fa fa-file
+                header: "Refresh Tokens"
+            create:
+                icon: fa fa-user-plus
+                header: "Create Refresh Token"
+                breadcrumb:
+                    index:
+                        icon: fa fa-file
+                        label: "Refresh Tokens"
+
+dos_admin_oauth_refresh_token_toggle:
+    path: /oauth-refresh-tokens/{id}/toggle
+    methods: [PUT]
+    defaults:
+        _format: json
+        _controller: dos.controller.oauth_refresh_token:updateAction
+        _sylius:
+            section: admin
+            form: Dos\OAuthServerBundle\Form\Type\ToggleRefreshTokenType

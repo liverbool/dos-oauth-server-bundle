@@ -1,0 +1,37 @@
+dos_admin_oauth_client:
+    type: sylius.resource
+    resource: |
+        alias: dos.oauth_client
+        section: admin
+        templates: ChangMin:Crud
+        grid: admin_oauth_client
+        permission: true
+        except: ["create", "show"]
+        vars:
+            all:
+                templates:
+                    form: DosOAuthServerBundle:Client:_form.html.twig
+            index:
+                icon: fa fa-file
+                header: "Clients"
+            create:
+                icon: fa fa-user-plus
+                header: "Create Clients"
+                breadcrumb:
+                    index:
+                        icon: fa fa-file
+                        label: "Clients"
+
+dos_admin_oauth_client_create:
+    path: /oauth-clients/new
+    methods: [GET, POST]
+    defaults:
+        _controller: dos.controller.oauth_client:createAction
+        _sylius:
+            section: admin
+            template: "@ChangMin/Crud/create.html.twig"
+            factory:
+                method: createWithIdentify
+            vars:
+                templates:
+                    form: DosOAuthServerBundle:Client:_form.html.twig

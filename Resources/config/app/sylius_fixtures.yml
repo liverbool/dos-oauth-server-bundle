@@ -1,0 +1,55 @@
+sylius_fixtures:
+    suites:
+        default:
+            fixtures:
+                dos_oauth_scope:
+                    priority: -99
+                    options:
+                        custom:
+                            default_api_scope:
+                                identifier: 'basic'
+                                name: 'Basic Scope'
+                                description: 'Demo Basic Scope'
+                            full_api_scope:
+                                identifier: 'full'
+                                name: 'Full Scope'
+                                description: 'Demo Full Scope'
+                dos_oauth_client:
+                    priority: -100
+                    options:
+                        custom:
+                            default_api_client:
+                                enabled: true
+                                identifier: 'demo_client'
+                                name: 'Demo Client'
+                                user: 'web@phpmob.com'
+                                description: 'Demo Client Description'
+                                secret: 'secret_demo_client'
+                                grant_types: ['password', 'authorization_code', 'refresh_token']
+                                redirect_uris: ['http://localhost/demo-oauth-redirect-uri']
+                dos_access_token:
+                    priority: -101
+                    options:
+                        custom:
+                            default_access_token:
+                                client: 'demo_client'
+                                user: 'web@phpmob.com'
+                                identifier: 'SampleToken'
+                                scope: 'full'
+                            default_expired_access_token:
+                                client: 'demo_client'
+                                user: 'web@phpmob.com'
+                                identifier: 'SampleTokenExpired'
+                                expires_in: 1 second
+                                scope: 'full basic'
+                dos_refresh_token:
+                    priority: -101
+                    options:
+                        custom:
+                            default_refresh_token:
+                                access_token: 'SampleToken'
+                                identifier: 'SampleRefreshToken'
+                            default_expired_refresh_token:
+                                access_token: 'SampleTokenExpired'
+                                identifier: 'SampleRefreshTokenExpired'
+                                expires_in: 1 second

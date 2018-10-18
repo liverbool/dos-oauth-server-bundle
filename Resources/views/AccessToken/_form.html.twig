@@ -1,0 +1,31 @@
+{{ form_errors(form) }}
+
+<div class="row">
+    <div class="col-12 col-md-5">
+        {# FIXME: display user in label #}
+        {{ form_row(form.user, { chooser: {
+            remote: {
+                url: path('dos_admin_oauth_search_user'),
+                value: 'id',
+                text: 'display_name',
+            },
+            render: {
+                option: 'user_avatar_render'
+            }
+        } }) }}
+        {{ form_row(form.client, { chooser: {
+            remote: {
+                url: path('dos_admin_oauth_search_client'),
+                value: 'id',
+                text: 'name',
+            },
+        } }) }}
+        {{ form_row(form.expiryDateTime) }}
+        {{ form_row(form.enabled) }}
+    </div>
+    <div class="col-12 col-md-7">
+        {{ form_row(form.identifier) }}
+        {{ form_row(form.scopes) }}
+    </div>
+</div>
+

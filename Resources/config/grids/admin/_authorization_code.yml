@@ -1,0 +1,65 @@
+sylius_grid:
+    grids:
+        admin_oauth_authorization_code:
+            driver:
+                name: doctrine/orm
+                options:
+                    class: "%dos.model.oauth_authorization_code.class%"
+                    repository:
+                        method: createListQueryBuilder
+            limits: [20]
+            sorting:
+                createdAt: desc
+            fields:
+                enabled:
+                    type: toggle
+                    label: Enabled?
+                    sortable: ~
+                    options:
+                        width: 50px
+                        route: dos_admin_oauth_authorization_code_toggle
+                        parameters:
+                            id: id
+                identifier:
+                    type: text
+                    label: Identifier
+                    sortable: ~
+                user:
+                    type: text
+                    label: User
+                    sortable: ~
+                client:
+                    type: text
+                    label: Client
+                    path: client.name
+                    sortable: ~
+                scopes:
+                    type: text
+                    label: Scopes
+                    path: scopes
+                createdAt:
+                    type: localizeddate
+                    label: Created At
+                    sortable: ~
+                    options:
+                        width: auto
+            filters:
+                search:
+                    type: string
+                    label: Search
+                    options:
+                        default: true
+                        fields:
+                            - user.username
+                            - user.email
+                            - clientTranslation.name
+                            - clientTranslation.description
+            actions:
+                main:
+                    create:
+                        type: create
+                item:
+                    update:
+                        type: update
+                    delete:
+                        type: delete

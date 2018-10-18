@@ -1,0 +1,96 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+        <service class="Dos\OAuthServerBundle\Form\Type\AccessTokenType">
+            <argument>%dos.model.oauth_access_token.class%</argument>
+            <argument type="collection">
+                <argument>dos</argument>
+            </argument>
+            <tag name="form.type"/>
+        </service>
+        <service class="Dos\OAuthServerBundle\Form\Type\AuthorizationCodeType">
+            <argument>%dos.model.oauth_authorization_code.class%</argument>
+            <argument type="collection">
+                <argument>dos</argument>
+            </argument>
+            <tag name="form.type"/>
+        </service>
+        <service class="Dos\OAuthServerBundle\Form\Type\ClientType">
+            <argument>%dos.model.oauth_client.class%</argument>
+            <argument type="collection">
+                <argument>dos</argument>
+            </argument>
+            <call method="setConfigureGrantTypes">
+                <argument>%dos.oauth.grant_types%</argument>
+            </call>
+            <tag name="form.type"/>
+        </service>
+        <service class="Dos\OAuthServerBundle\Form\Type\ClientTranslationType">
+            <argument>%dos.model.oauth_client_translation.class%</argument>
+            <argument type="collection">
+                <argument>dos</argument>
+            </argument>
+            <tag name="form.type"/>
+        </service>
+        <service class="Dos\OAuthServerBundle\Form\Type\ClientLogoType">
+            <argument>%dos.model.oauth_client_logo.class%</argument>
+            <argument type="collection">
+                <argument>dos</argument>
+            </argument>
+            <tag name="form.type"/>
+        </service>
+
+        <service class="Dos\OAuthServerBundle\Form\Type\ScopeType">
+            <argument>%dos.model.oauth_scope.class%</argument>
+            <argument type="collection">
+                <argument>dos</argument>
+            </argument>
+            <tag name="form.type"/>
+        </service>
+        <service class="Dos\OAuthServerBundle\Form\Type\ScopeTranslationType">
+            <argument>%dos.model.oauth_scope_translation.class%</argument>
+            <argument type="collection">
+                <argument>dos</argument>
+            </argument>
+            <tag name="form.type"/>
+        </service>
+        <service class="Dos\OAuthServerBundle\Form\Type\RefreshTokenType">
+            <argument>%dos.model.oauth_refresh_token.class%</argument>
+            <argument type="collection">
+                <argument>dos</argument>
+            </argument>
+            <tag name="form.type"/>
+        </service>
+
+        <service class="Dos\OAuthServerBundle\Form\Type\ScopeChoiceType">
+            <argument type="service" id="dos.repository.oauth_scope"/>
+            <tag name="form.type"/>
+        </service>
+
+        <service class="Dos\OAuthServerBundle\Form\Type\ToggleAccessTokenType">
+            <argument>%dos.model.oauth_access_token.class%</argument>
+            <argument type="collection">
+                <argument>dos</argument>
+            </argument>
+            <tag name="form.type"/>
+        </service>
+        <service class="Dos\OAuthServerBundle\Form\Type\ToggleAuthorizationCodeType">
+            <argument>%dos.model.oauth_authorization_code.class%</argument>
+            <argument type="collection">
+                <argument>dos</argument>
+            </argument>
+            <tag name="form.type"/>
+        </service>
+        <service class="Dos\OAuthServerBundle\Form\Type\ToggleRefreshTokenType">
+            <argument>%dos.model.oauth_refresh_token.class%</argument>
+            <argument type="collection">
+                <argument>dos</argument>
+            </argument>
+            <tag name="form.type"/>
+        </service>
+    </services>
+</container>

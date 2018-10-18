@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
+                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                    xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/services/constraint-mapping-1.0.xsd">
+    <class name="Dos\OAuthServerBundle\Model\ScopeTranslation">
+        <property name="name">
+            <constraint name="NotBlank">
+                <option name="message">dos.oauth_scope.name.not_blank</option>
+                <option name="groups">
+                    <value>dos</value>
+                </option>
+            </constraint>
+        </property>
+        <property name="description">
+            <constraint name="NotBlank">
+                <option name="message">dos.oauth_scope.description.not_blank</option>
+                <option name="groups">
+                    <value>dos</value>
+                </option>
+            </constraint>
+        </property>
+    </class>
+</constraint-mapping>

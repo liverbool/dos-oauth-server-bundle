@@ -1,0 +1,145 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <imports>
+        <import resource="services/form.xml"/>
+    </imports>
+
+    <services>
+        <service id="dos.context.token_based_api_client" class="Dos\OAuthServerBundle\Context\TokenBasedClientContext" public="true" lazy="true">
+            <argument type="service" id="security.token_storage"/>
+            <argument type="service" id="dos.repository.oauth_client"/>
+        </service>
+
+        <service id="dos.context.api_client" alias="dos.context.token_based_api_client"/>
+
+        <service class="Dos\OAuthServerBundle\EventListener\ResolverNativeUserListener" lazy="true">
+            <argument type="service" id="dos.oauth.user_provider"/>
+            <tag name="doctrine.event_listener" event="prePersist"/>
+        </service>
+
+        <service class="Dos\OAuthServerBundle\EventListener\ExceptionSubscriber" parent="twig.exception_listener">
+            <tag name="kernel.event_subscriber" />
+            <call method="setEnableThrowException">
+                <argument>%dos.oauth.throw_exception%</argument>
+            </call>
+        </service>
+
+        <service id="dos.oauth.authorization_code_grant" class="League\OAuth2\Server\Grant\AuthCodeGrant">
+            <argument type="service" id="dos.repository.oauth_authorization_code"/>
+            <argument type="service" id="dos.repository.oauth_refresh_token"/>
+            <argument type="service">
+                <service class="\DateInterval">
+                    <argument>%dos.oauth.authorization_code_ttl%</argument>
+                </service>
+            </argument>
+        </service>
+
+        <service id="dos.oauth.client_credentials_grant" class="League\OAuth2\Server\Grant\ClientCredentialsGrant"/>
+
+        <service id="dos.oauth.implicit_grant" class="League\OAuth2\Server\Grant\ImplicitGrant">
+            <argument type="service">
+                <service class="\DateInterval">
+                    <argument>%dos.oauth.implicit_token_ttl%</argument>
+                </service>
+            </argument>
+        </service>
+
+        <service id="dos.oauth.password_grant" class="League\OAuth2\Server\Grant\PasswordGrant">
+            <argument type="service">
+                <service class="Dos\OAuthServerBundle\Repository\Doctrine\ORM\UserRepository"
+                         parent="dos.repository.oauth_user"
+                         decorates="dos.repository.oauth_user">
+                    <call method="setEncoderFactory">
+                        <argument type="service" id="security.encoder_factory"/>
+                    </call>
+                    <call method="setUserChecker">
+                        <argument type="service" id="security.user_checker"/>
+                    </call>
+                </service>
+            </argument>
+            <argument type="service" id="dos.repository.oauth_refresh_token"/>
+        </service>
+
+        <service id="dos.oauth.refresh_token_grant" class="League\OAuth2\Server\Grant\RefreshTokenGrant">
+            <argument type="service" id="dos.repository.oauth_refresh_token"/>
+        </service>
+
+        <service id="dos.oauth.authorization_server" class="League\OAuth2\Server\AuthorizationServer" public="true">
+            <argument type="service" id="dos.repository.oauth_client"/>
+            <argument type="service" id="dos.repository.oauth_access_token"/>
+            <argument type="service" id="dos.repository.oauth_scope"/>
+            <argument>%dos.oauth.private_key%</argument>
+            <argument>%dos.oauth.encryption_key%</argument>
+        </service>
+
+        <service id="dos.oauth.resource_server" class="League\OAuth2\Server\ResourceServer" public="true">
+            <argument type="service" id="dos.repository.oauth_access_token"/>
+            <argument type="service">
+                <service class="League\OAuth2\Server\CryptKey">
+                    <argument>%dos.oauth.public_key%</argument>
+                    <argument>%dos.oauth.pass_phrase%</argument>
+                    <argument>%dos.oauth.key_permissions_check%</argument>
+                </service>
+            </argument>
+        </service>
+
+        <service id="dos.oauth.user_provider" class="Dos\OAuthServerBundle\Security\Authentication\UserProvider"
+                 public="false">
+            <argument type="service" id="dos.repository.oauth_user"/>
+        </service>
+
+        <service id="dos.oauth.authenticator" class="Dos\OAuthServerBundle\Security\Authentication\OAuthAuthenticator"
+                 public="true">
+            <argument type="service" id="security.user_checker"/>
+            <argument type="service" id="dos.oauth.user_provider"/>
+            <argument type="service" id="dos.oauth.resource_server"/>
+        </service>
+
+        <service id="dos.oauth.restriction_checker" class="Dos\OAuthServerBundle\Checker\RestrictionChecker">
+            <argument type="service" id="dos.repository.oauth_client"/>
+            <argument>%dos.oauth.client_scope_restrict%</argument>
+            <argument>%dos.oauth.client_grant_restrict%</argument>
+        </service>
+
+        <service id="dos.oauth.authorize_controller"
+                 class="Dos\OAuthServerBundle\Controller\AuthorizeController"
+                 public="true" lazy="true">
+            <argument type="service" id="templating"/>
+            <argument type="service" id="form.factory"/>
+            <argument type="service" id="security.token_storage"/>
+            <argument type="service" id="dos.repository.oauth_authorized_user"/>
+            <argument type="service" id="dos.oauth.restriction_checker"/>
+            <argument type="service" id="dos.oauth.authorization_server"/>
+        </service>
+
+        <service class="Dos\OAuthServerBundle\Command\KeysCommand" lazy="true">
+            <argument>%kernel.project_dir%</argument>
+            <tag name="console.command"/>
+        </service>
+
+        <service class="Dos\OAuthServerBundle\Command\ScopeCommand" lazy="true">
+            <argument type="service" id="dos.factory.oauth_scope"/>
+            <argument type="service" id="dos.repository.oauth_scope"/>
+            <tag name="console.command"/>
+        </service>
+
+        <service class="Dos\OAuthServerBundle\Command\ClientCommand" lazy="true">
+            <argument type="service" id="dos.factory.oauth_client"/>
+            <argument type="service" id="dos.repository.oauth_client"/>
+            <argument type="service" id="dos.factory.oauth_scope"/>
+            <argument type="service" id="dos.repository.oauth_scope"/>
+            <argument type="service" id="dos.repository.oauth_user"/>
+            <argument>%dos.oauth.grant_types%</argument>
+            <tag name="console.command"/>
+        </service>
+
+        <service id="dos.factory.oauth_client_custom" class="Dos\OAuthServerBundle\Factory\ClientFactory"
+                 decorates="dos.factory.oauth_client">
+            <argument type="service" id="dos.factory.oauth_client_custom.inner"/>
+        </service>
+    </services>
+</container>

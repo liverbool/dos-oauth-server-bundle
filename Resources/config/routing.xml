@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<routes xmlns="http://symfony.com/schema/routing"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
+
+    <route id="dos_oauth2_request_authorize" path="/oauth/authorize" methods="GET">
+        <default key="_controller">dos.oauth.authorize_controller:requestAuthorizeAction</default>
+    </route>
+
+    <route id="dos_oauth2_approve_authorize" path="/oauth/authorize" methods="POST">
+        <default key="_controller">dos.oauth.authorize_controller:approveAuthorizeAction</default>
+    </route>
+
+    <route id="dos_oauth2_deny_authorize" path="/oauth/authorize" methods="DELETE">
+        <default key="_controller">dos.oauth.authorize_controller:denyAuthorizeAction</default>
+    </route>
+
+    <route id="dos_oauth2_access_token" path="/oauth/token" methods="POST">
+        <default key="_controller">dos.oauth.authorize_controller:accessTokenAction</default>
+    </route>
+</routes>

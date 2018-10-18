@@ -1,0 +1,7 @@
+imports:
+    - { resource: "@DosOAuthServerBundle/Resources/config/grids/admin/_access_token.yml" }
+    - { resource: "@DosOAuthServerBundle/Resources/config/grids/admin/_authorization_code.yml" }
+    - { resource: "@DosOAuthServerBundle/Resources/config/grids/admin/_client.yml" }
+    - { resource: "@DosOAuthServerBundle/Resources/config/grids/admin/_refresh_token.yml" }
+    - { resource: "@DosOAuthServerBundle/Resources/config/grids/admin/_scope.yml" }
+    - { resource: "@DosOAuthServerBundle/Resources/config/grids/admin/_search.yml" }

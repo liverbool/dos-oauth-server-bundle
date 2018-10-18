@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xmlns:gedmo="http://gediminasm.org/schemas/orm/doctrine-extensions-mapping"
+                  xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+    <mapped-superclass name="Dos\OAuthServerBundle\Model\AuthorizationCode" table="dos_oauth_authorization_code">
+        <id name="id" column="id" type="integer">
+            <generator strategy="AUTO"/>
+        </id>
+
+        <field name="identifier" type="string" nullable="true" unique="true"/>
+        <field name="redirectUri" type="string" nullable="false"/>
+        <field name="enabled" type="boolean" nullable="true"/>
+        <field name="expiryDateTime" type="datetime" nullable="true"/>
+
+        <field name="createdAt" type="datetime">
+            <gedmo:timestampable on="create"/>
+        </field>
+
+        <field name="updatedAt" type="datetime" nullable="true">
+            <gedmo:timestampable on="update"/>
+        </field>
+
+        <many-to-one field="client" target-entity="Dos\OAuthServerBundle\Model\ClientInterface"
+                     inversed-by="authorizationCodes">
+            <join-column name="client_id" referenced-column-name="id"/>
+        </many-to-one>
+
+        <many-to-one field="user" target-entity="Dos\OAuthServerBundle\Model\UserInterface">
+            <join-column name="user_id" referenced-column-name="id" nullable="true"/>
+        </many-to-one>
+
+        <many-to-many field="scopes" target-entity="Dos\OAuthServerBundle\Model\ScopeInterface" fetch="EXTRA_LAZY">
+            <join-table name="dos_oauth_authorization_code_scopes">
+                <join-columns>
+                    <join-column name="authorization_code_id" referenced-column-name="id"/>
+                </join-columns>
+                <inverse-join-columns>
+                    <join-column name="scope_id" referenced-column-name="id"/>
+                </inverse-join-columns>
+            </join-table>
+        </many-to-many>
+    </mapped-superclass>
+</doctrine-mapping>

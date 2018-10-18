@@ -1,0 +1,17 @@
+dos_admin_oauth_access_tokens:
+    resource: "@DosOAuthServerBundle/Resources/config/routing/admin/_access_token.yml"
+
+dos_admin_oauth_authorization_codes:
+    resource: "@DosOAuthServerBundle/Resources/config/routing/admin/_authorization_code.yml"
+
+dos_admin_oauth_clients:
+    resource: "@DosOAuthServerBundle/Resources/config/routing/admin/_client.yml"
+
+dos_admin_oauth_refresh_tokens:
+    resource: "@DosOAuthServerBundle/Resources/config/routing/admin/_refresh_token.yml"
+
+dos_admin_oauth_scopes:
+    resource: "@DosOAuthServerBundle/Resources/config/routing/admin/_scope.yml"
+
+dos_admin_oauth_searchs:
+    resource: "@DosOAuthServerBundle/Resources/config/routing/admin/_search.yml"

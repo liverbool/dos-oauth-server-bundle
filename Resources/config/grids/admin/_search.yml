@@ -1,0 +1,45 @@
+sylius_grid:
+    grids:
+        admin_oauth_search_user:
+            driver:
+                name: doctrine/orm
+                options:
+                    class: "%dos.model.oauth_user.class%"
+            limits: [10]
+            sorting:
+                username: asc
+            fields:
+                username:
+                    type: string
+                    label: Username
+            filters:
+                search:
+                    type: string
+                    label: Search
+                    options:
+                        default: true
+                        fields: [email, username, firstName, lastName]
+
+        admin_oauth_search_client:
+            driver:
+                name: doctrine/orm
+                options:
+                    class: "%dos.model.oauth_client.class%"
+                    repository:
+                        method: createListQueryBuilder
+            limits: [10]
+            sorting:
+                name: asc
+            fields:
+                name:
+                    type: string
+                    label: Name
+            filters:
+                search:
+                    type: string
+                    label: Search
+                    options:
+                        default: true
+                        fields:
+                            - translation.name
+                            - translation.description

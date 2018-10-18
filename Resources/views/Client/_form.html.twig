@@ -1,0 +1,27 @@
+{{ form_errors(form) }}
+
+<div class="row">
+    <div class="col-12 col-md-4">
+        {# FIXME: display user in label #}
+        {{ form_row(form.user, { chooser: {
+            remote: {
+                url: path('dos_admin_oauth_search_user'),
+                value: 'id',
+                text: 'display_name',
+            },
+            render: {
+                option: 'user_avatar_render'
+            }
+        } }) }}
+        {{ form_row(form.grantTypes) }}
+        {{ form_row(form.supportsScopes) }}
+        {{ form_row(form.authorizedRequire) }}
+        {{ form_row(form.enabled) }}
+        {{ form_row(form.logo) }}
+    </div>
+    <div class="col-12 col-md-8">
+        {{ form_row(form.translations) }}
+        <div class="mt-4"/>
+        {{ form_row(form.redirectUris) }}
+    </div>
+</div>
